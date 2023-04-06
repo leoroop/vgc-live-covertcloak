@@ -22,15 +22,15 @@ def main():
         # STILL FRAMES TO EASILY CALCULATE MARKERS POSITIONS
         
         # frame = cv2.imread("../screens/no_move.png")
-        # frame = cv2.imread("../screens/moves.png")
-        frame = cv2.imread("../screens/target.png")
+        frame = cv2.imread("../screens/moves.png")
+        # frame = cv2.imread("../screens/target.png")
         # frame = cv2.imread("../screens/change.png")
         # success, frame = capture.read()
         
         clean = frame.copy()        
         process(frame, covers)
         
-        show_markers(clean)
+        # show_markers(clean)
 
         cv2.imshow("VGC Hide Info (Beta)", frame)
         # cv2.imshow("VGC Hide Info (SV Beta)", mask_yellow)
