@@ -3,9 +3,10 @@ import numpy as np
 
 from markers import *
 from process import process
+from utils import *
 
 def main():
-    # device=int(input("insert device number (starting from 0): "))
+    # device = = choose_capturecard() # THIS STILL NEEDS TO BE TESTED
 
     # capture = cv2.VideoCapture(device)
     # capture.set(3, 1280)
