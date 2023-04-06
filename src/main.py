@@ -3,14 +3,16 @@ import numpy as np
 
 from markers import *
 from process import process
+
 from utils import *
 
 def main():
-    # device = = choose_capturecard() # THIS STILL NEEDS TO BE TESTED
+    
+    device = choose_capturecard() # THIS STILL NEEDS TO BE TESTED
 
-    # capture = cv2.VideoCapture(device)
-    # capture.set(3, 1280)
-    # capture.set(4, 720)
+    capture = cv2.VideoCapture(device)
+    capture.set(3, 1280)
+    capture.set(4, 720)
 
     covers = {
         "moves": cv2.imread("../covers/cover_moves.jpg"),
@@ -22,10 +24,10 @@ def main():
         # STILL FRAMES TO EASILY CALCULATE MARKERS POSITIONS
         
         # frame = cv2.imread("../screens/no_move.png")
-        frame = cv2.imread("../screens/moves.png")
+        # frame = cv2.imread("../screens/moves.png")
         # frame = cv2.imread("../screens/target.png")
         # frame = cv2.imread("../screens/change.png")
-        # success, frame = capture.read()
+        success, frame = capture.read()
         
         clean = frame.copy()        
         process(frame, covers)
@@ -33,7 +35,6 @@ def main():
         # show_markers(clean)
 
         cv2.imshow("VGC Hide Info (Beta)", frame)
-        # cv2.imshow("VGC Hide Info (SV Beta)", mask_yellow)
         cv2.imshow("Cleanfeed", clean)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

@@ -1,11 +1,12 @@
 import cv2
-import device
+from pygrabber.dshow_graph import FilterGraph
 
 def choose_capturecard():
     print("OpenCV version: " + cv2.__version__)
 
     # Get camera list
-    device_list = device.getDeviceList()
+    graph = FilterGraph()
+    device_list = graph.get_input_devices()
     etiqueta = 0
 
     for name in device_list:

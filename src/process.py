@@ -16,6 +16,8 @@ def process(frame, covers):
     process_targets(frame, mask_yellow, covers["target"])
     process_changepokemon(frame, mask_yellow, covers["changepkmn"])
 
+    # cv2.imshow("VGC Hide Info (SV Beta)", mask_yellow)
+
 
 def process_moves(frame, mask, cover):
     move_min_pixels = 200
