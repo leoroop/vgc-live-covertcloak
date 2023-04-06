@@ -1,12 +1,12 @@
 import cv2
 
 def show_markers(frame):
-    moves_markers(frame)
-    target_markers(frame)
+    # moves_markers(frame)
+    # target_markers(frame)
 
     teampreview_markers(frame)
     
-    changepokemon_markers(frame)
+    # changepokemon_markers(frame)
     # hp_markers(frame)
 
 
@@ -26,8 +26,13 @@ def target_markers(frame):
 
 
 def teampreview_markers(frame):
-    #TODO: make this!
-    pass
+    cv2.rectangle(frame, (105,100),(540,170),(0, 255, 0),cv2.LINE_4)
+    cv2.rectangle(frame, (105,178),(540,248),(0, 255, 0),cv2.LINE_4)
+    cv2.rectangle(frame, (105,256),(540,326),(0, 255, 0),cv2.LINE_4)
+    cv2.rectangle(frame, (105,333),(540,403),(0, 255, 0),cv2.LINE_4)
+    cv2.rectangle(frame, (105,410),(540,480),(0, 255, 0),cv2.LINE_4)
+    cv2.rectangle(frame, (105,489),(540,559),(0, 255, 0),cv2.LINE_4)
+    cv2.rectangle(frame, (110,567),(535,627),(0, 255, 0),cv2.LINE_4)
 
 
 #TODO: Old system markers, have to update them

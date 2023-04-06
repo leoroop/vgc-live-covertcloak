@@ -8,8 +8,7 @@ from utils import *
 
 def main():
     
-    device = choose_capturecard() # THIS STILL NEEDS TO BE TESTED
-
+    device = choose_capturecard()
     capture = cv2.VideoCapture(device)
     capture.set(3, 1280)
     capture.set(4, 720)
@@ -27,6 +26,7 @@ def main():
         # frame = cv2.imread("../screens/moves.png")
         # frame = cv2.imread("../screens/target.png")
         # frame = cv2.imread("../screens/change.png")
+        # frame = cv2.imread("../screens/teampreview.png")
         success, frame = capture.read()
         
         clean = frame.copy()        

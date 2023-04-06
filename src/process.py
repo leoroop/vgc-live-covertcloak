@@ -12,9 +12,12 @@ def process(frame, covers):
 
     mask_yellow = cv2.inRange(hsv_frame, yellow_min, yellow_max)
 
-    process_moves(frame, mask_yellow, covers["moves"])
-    process_targets(frame, mask_yellow, covers["target"])
-    process_changepokemon(frame, mask_yellow, covers["changepkmn"])
+    in_team_preview = process_teampreview(frame, mask_yellow, covers["target"])
+    if not in_team_preview:
+        process_moves(frame, mask_yellow, covers["moves"])
+        process_targets(frame, mask_yellow, covers["target"])
+        process_changepokemon(frame, mask_yellow, covers["changepkmn"])
+    
 
     # cv2.imshow("VGC Hide Info (SV Beta)", mask_yellow)
 
@@ -33,7 +36,7 @@ def process_moves(frame, mask, cover):
         checkpoint(move_4, move_min_pixels) == True 
     ):
         # cv2.rectangle(frame, (750,300),(1260,700),(255,0,255),cv2.LINE_4)
-        frame[300:700, 750:1260] = cover
+        frame[300:700, 735:1260] = cover
 
 
 def process_targets(frame, mask, cover):
@@ -50,7 +53,7 @@ def process_targets(frame, mask, cover):
         checkpoint(target_bottom_right, target_min_pixels) == True
     ):
         # cv2.rectangle(frame, (420,25),(865,620),(255,0,255),cv2.LINE_4)
-        frame[25:620, 420:865] = cover
+        frame[20:625, 415:870] = cover
 
 
 def process_changepokemon(frame, mask, cover):
@@ -67,6 +70,33 @@ def process_changepokemon(frame, mask, cover):
     ):
         # cv2.rectangle(frame, (30,70),(1260,620),(255,0,255),cv2.LINE_4)
         frame[70:620, 30:1260] = cover
+
+
+
+def process_teampreview(frame, mask, cover):
+    teampreview_min_pixels = 7000
+    confirm_min_pixels = 2500
+    pokemon_1 = mask[100:170, 105:540]
+    pokemon_2 = mask[178:248, 105:540]
+    pokemon_3 = mask[256:326, 105:540]
+    pokemon_4 = mask[333:403, 105:540]
+    pokemon_5 = mask[410:480, 105:540]
+    pokemon_6 = mask[489:559, 105:540]
+    confirm = mask[567:627, 110:535]
+    if(
+        checkpoint(pokemon_1, teampreview_min_pixels) == True or
+        checkpoint(pokemon_2, teampreview_min_pixels) == True or
+        checkpoint(pokemon_3, teampreview_min_pixels) == True or
+        checkpoint(pokemon_4, teampreview_min_pixels) == True or
+        checkpoint(pokemon_5, teampreview_min_pixels) == True or
+        checkpoint(pokemon_6, teampreview_min_pixels) == True or
+        checkpoint(confirm, confirm_min_pixels) == True
+    ):
+        # cv2.rectangle(frame, (30,70),(1260,620),(255,0,255),cv2.LINE_4)
+        frame[25:630, 90:545] = cover
+        return True
+    
+    return False
 
 
 # Check if enough colored pixels are in the selected area
