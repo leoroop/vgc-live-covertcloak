@@ -20,14 +20,17 @@ def moves_markers(frame):
     move3_y = int(height * 0.826389) # 595 / 720
     move4_y = int(height * 0.930556) # 670 / 720
 
+    moves_x_offset = int(width / 64)
+    moves_y_offset = int(height / 36)
+
     color = (0,0,255) # red
     line_style = cv2.LINE_4
 
     #TODO: calcolare offset correttamente
-    cv2.rectangle(frame, (moves_x, move1_y), (moves_x + 20, move1_y + 20), color, line_style)
-    cv2.rectangle(frame, (moves_x, move2_y), (moves_x + 20, move2_y + 20), color, line_style)
-    cv2.rectangle(frame, (moves_x, move3_y), (moves_x + 20, move3_y + 20), color, line_style)
-    cv2.rectangle(frame, (moves_x, move4_y), (moves_x + 20, move4_y + 20), color, line_style)
+    cv2.rectangle(frame, (moves_x, move1_y), (moves_x + moves_x_offset, move1_y + moves_y_offset), color, line_style)
+    cv2.rectangle(frame, (moves_x, move2_y), (moves_x + moves_x_offset, move2_y + moves_y_offset), color, line_style)
+    cv2.rectangle(frame, (moves_x, move3_y), (moves_x + moves_x_offset, move3_y + moves_y_offset), color, line_style)
+    cv2.rectangle(frame, (moves_x, move4_y), (moves_x + moves_x_offset, move4_y + moves_y_offset), color, line_style)
 
 
 def target_markers(frame):

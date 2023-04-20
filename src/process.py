@@ -23,6 +23,8 @@ def process(frame, covers):
 
 
 def process_moves(frame, mask, cover):
+
+    
     move_min_pixels = 200
     move_1 = mask[445:465, 940:960]
     move_2 = mask[520:540, 940:960]
