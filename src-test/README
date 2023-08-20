@@ -1,1 +1,11 @@
 This is a temporal folder for testing the new features
+
+
+August 20, 2023:
+
+main.py, colors.py and utils.py files are the main skeleton of the covertcloak.
+For now it covers the following screens: Pick, Pokémon, Change Pokémon, Choose Command, Choose Target.
+This script creates a buffer of 5 frames, so the Hide Window is 5 frames behind the Cleanfeed. This allows to cover retrogradely the previous frames that are not being recognized as long as there is a "fade in" (opacity) of the game overlays.
+This script also keeps hiding 10 frames after the image recognition ends. This is because the "fade out" (opacity) of the game overlays.
+Colors are only calibrated for my capture card. They maybe should be changed manually to match your capture card color processing. (TODO calibrator)
+Checkpoints coordinates are meassured only in 1920x1080. This is because there are several checkpoints of only 4 pixels. So lower resolutions make it even more difficult to be accurate. It is not impossible as long as there is a step blurring the frame before looking for the checkpoint. (Lower resolutions are still a TODO thing)
