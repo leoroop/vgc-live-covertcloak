@@ -1,23 +1,27 @@
 from utils import *
-from colors import *
-
-
-def checkpoint(masked_area, min_pixels=30):
-    pixels = cv2.countNonZero(masked_area)
-    return pixels > min_pixels
-
-
-covers = {
-    "command": cv2.imread("covers/command.png"),
-    "target": cv2.imread("covers/target.png"),
-    "change": cv2.imread("covers/change.png"),
-    "pick": cv2.imread("covers/pick.png")
-}
+import numpy as np
+import json
 
 device = choose_capturecard()
-capture = cv2.VideoCapture(device, cv2.CAP_DSHOW)
-capture.set(3, 1920)
-capture.set(4, 1080)
+
+number_of_windows = choose_number_of_windows()
+
+with open('colors.json', 'r', encoding='utf-8') as file:
+    colors = json.load(file)
+
+green_min = np.array([colors['green']['h_min'], colors['green']['s_min'], colors['green']['v_min']])
+green_max = np.array([colors['green']['h_max'], colors['green']['s_max'], colors['green']['v_max']])
+white_min = np.array([colors['white']['h_min'], colors['white']['s_min'], colors['white']['v_min']])
+white_max = np.array([colors['white']['h_max'], colors['white']['s_max'], colors['white']['v_max']])
+yellow_min = np.array([colors['yellow']['h_min'], colors['yellow']['s_min'], colors['yellow']['v_min']])
+yellow_max = np.array([colors['yellow']['h_max'], colors['yellow']['s_max'], colors['yellow']['v_max']])
+
+covers = {
+    "command": cv2.imread("covers/command.png", cv2.IMREAD_UNCHANGED),
+    "target": cv2.imread("covers/target.png", cv2.IMREAD_UNCHANGED),
+    "change": cv2.imread("covers/change.png", cv2.IMREAD_UNCHANGED),
+    "pick": cv2.imread("covers/pick.png", cv2.IMREAD_UNCHANGED)
+}
 
 pick_cnt = 0
 command_cnt = 0
@@ -27,6 +31,10 @@ change_cnt = 0
 hide_color = [72, 41, 155]
 
 buffer = []
+
+capture = cv2.VideoCapture(device, cv2.CAP_DSHOW)
+capture.set(3, 1920)
+capture.set(4, 1080)
 while True:
     success, frame = capture.read()
     clean = frame.copy()
@@ -55,11 +63,11 @@ while True:
             checkpoint(team_left, 1600) is True
         )
     ):
-        buffer[0][130:860, 80:1700] = covers['pick']
+        buffer[0] = overlay_frame(buffer[0], covers['pick'])
         pick_cnt = 10
     else:
         if pick_cnt:
-            buffer[0][130:860, 80:1700] = covers['pick']
+            buffer[0] = overlay_frame(buffer[0], covers['pick'])
             pick_cnt -= 1
 
     # check if input command screen
@@ -74,38 +82,30 @@ while True:
         checkpoint(not_command_top, 60) is False and
         checkpoint(not_command_bot, 60) is False
     ):
-        buffer[0][580:1080, 1110:1920] = covers['command']
-        command_cnt = 10
+        buffer[0] = overlay_frame(buffer[0], covers['command'])
+        command_cnt = 5
     else:
         if command_cnt:
-            buffer[0][580:1080, 1110:1920] = covers['command']
+            buffer[0] = overlay_frame(buffer[0], covers['command'])
             command_cnt -= 1
 
-    # check if choosing target screen
-    target_top_left = mask_yellow[155:195, 660:665]
-    target_top_right = mask_yellow[155:195, 981:986]
-    target_bot_left = mask_yellow[860:885, 660:665]
-    target_bot_right = mask_yellow[860:885, 981:986]
-    not_target_top = mask_yellow[140:260, 615:620]
-    not_target_bot = mask_yellow[560:680, 615:620]
-    not_target_left = mask_yellow[870:920, 370:380]
+    # check if target screen
+    target_top = mask_yellow[0:1, 10:1910]
+    target_bot = mask_yellow[1079:1080, 10:1910]
+    target_button_left = mask_white[1030:1046, 1774:1776]
+    target_button_right = mask_white[1030:1046, 1793:1795]
 
     if (
-        (
-            checkpoint(target_top_left, 115) is True or
-            checkpoint(target_top_right, 115) is True or
-            checkpoint(target_bot_left, 115) is True or
-            checkpoint(target_bot_right, 115) is True
-        ) and
-            checkpoint(not_target_top, 30) is False and
-            checkpoint(not_target_bot, 30) is False and
-            checkpoint(not_target_left, 300) is False
+        checkpoint(target_top, 1500) and
+        checkpoint(target_bot, 1500) and
+        checkpoint(target_button_left, 25) and
+        checkpoint(target_button_right, 25)
     ):
-        buffer[0][20:1050, 615:1325] = covers['target']
-        target_cnt = 10
+        buffer[0] = overlay_frame(buffer[0], covers['target'])
+        target_cnt = 8
     else:
         if target_cnt:
-            buffer[0][20:1050, 615:1325] = covers['target']
+            buffer[0] = overlay_frame(buffer[0], covers['target'])
             target_cnt -= 1
 
     # check if change Pokémon screen
@@ -128,24 +128,26 @@ while True:
         checkpoint(not_change3, 20) is False and
         checkpoint(not_change4, 20) is False
     ):
-        buffer[0][100:1000, 40:1840] = covers["change"]
+        buffer[0] = overlay_frame(buffer[0], covers['change'])
         change_cnt = 10
     else:
         if change_cnt:
-            buffer[0][100:1000, 40:1840] = covers["change"]
+            buffer[0] = overlay_frame(buffer[0], covers['change'])
             change_cnt -= 1
 
-    # team preview_markers(frame)
-    resized1 = cv2.resize(clean, (1280, 720), interpolation=cv2.INTER_AREA)
-    cv2.imshow("clean", resized1)
+    if number_of_windows == 2:
+        # team preview_markers(frame)
+        resized1 = cv2.resize(clean, (1280, 720), interpolation=cv2.INTER_AREA)
+        cv2.imshow("Cleanfeed", resized1)
 
     if len(buffer) >= 5:
         resized2 = cv2.resize(buffer[0], (1280, 720), interpolation=cv2.INTER_AREA)
-        cv2.imshow("hide", resized2)
+        cv2.imshow("VGC Live Covert Cloak", resized2)
         del buffer[0]
 
     if cv2.waitKey(1) & 0xFF == 27:
         break
+
 
 capture.release()
 cv2.destroyAllWindows()

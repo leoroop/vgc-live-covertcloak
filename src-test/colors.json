@@ -1,0 +1,26 @@
+{
+    "green": {
+        "v_max": 255,
+        "v_min": 161,
+        "s_max": 255,
+        "s_min": 172,
+        "h_max": 55,
+        "h_min": 37
+    },
+    "yellow": {
+        "v_max": 255,
+        "v_min": 161,
+        "s_max": 255,
+        "s_min": 147,
+        "h_max": 35,
+        "h_min": 17
+    },
+    "white": {
+        "v_max": 255,
+        "v_min": 172,
+        "s_max": 152,
+        "s_min": 0,
+        "h_max": 199,
+        "h_min": 0
+    }
+}
