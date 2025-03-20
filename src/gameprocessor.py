@@ -7,6 +7,7 @@ class GameProcessor():
 
         self.red_color = (0,0,255)
         self.blue_color = (255, 0,0)
+        self.green_color = (0, 255,0)
         self.line_style = cv2.LINE_4
 
         self.__calc_moves_positions();
@@ -31,9 +32,49 @@ class GameProcessor():
         self.target_top = int(self.frame_height * 0.618056) # 95 / 720
         self.target_bottom = int(self.frame_height * 0.618056) # 375 / 720
 
+        self.target_x_offset = int(self.frame_width / 6.4)
+        self.target_y_offset = int(self.frame_height / 3.2)
+
 
     def apply_moves_markers(self, frame):
-        cv2.rectangle(frame, (self.moves_x, self.move1_y), (self.moves_x + self.moves_x_offset, self.move1_y + self.moves_y_offset), self.color_red, self.line_style)
-        cv2.rectangle(frame, (self.moves_x, self.move2_y), (self.moves_x + self.moves_x_offset, self.move2_y + self.moves_y_offset), self.color_red, self.line_style)
-        cv2.rectangle(frame, (self.moves_x, self.move3_y), (self.moves_x + self.moves_x_offset, self.move3_y + self.moves_y_offset), self.color_red, self.line_style)
-        cv2.rectangle(frame, (self.moves_x, self.move4_y), (self.moves_x + self.moves_x_offset, self.move4_y + self.moves_y_offset), self.color_red, self.line_style)
+        cv2.rectangle(
+            frame, 
+            (self.moves_x, self.move1_y), 
+            (self.moves_x + self.moves_x_offset, self.move1_y + self.moves_y_offset), 
+            self.red_color, 
+            self.line_style
+        )
+        cv2.rectangle(
+            frame,
+            (self.moves_x, self.move2_y),
+            (self.moves_x + self.moves_x_offset, self.move2_y + self.moves_y_offset),
+            self.red_color,
+            self.line_style
+        )
+        cv2.rectangle(
+            frame,
+            (self.moves_x, self.move3_y),
+            (self.moves_x + self.moves_x_offset, self.move3_y + self.moves_y_offset),
+            self.red_color,
+            self.line_style
+        )
+        cv2.rectangle(
+            frame,
+            (self.moves_x, self.move4_y),
+            (self.moves_x + self.moves_x_offset,
+            self.move4_y + self.moves_y_offset),
+            self.red_color,
+            self.line_style
+        )
+
+    def apply_targets_markers(self, frame):
+        cv2.rectangle(
+            frame,
+            (self.target_left, self.target_top),
+            (self.target_left + self.target_x_offset, self.target_top + self.target_y_offset),
+            self.red_color,
+            self.line_style
+        )
+        #TODO: il rettangolo sembra giusto ma compare nel punto sbagliato, capire perchè e fixare
+
+

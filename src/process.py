@@ -13,6 +13,7 @@ def process(frame, covers):
     mask_yellow = cv2.inRange(hsv_frame, yellow_min, yellow_max)
 
     in_team_preview = process_teampreview(frame, mask_yellow, covers["target"])
+    
     if not in_team_preview:
         process_moves(frame, mask_yellow, covers["moves"])
         process_targets(frame, mask_yellow, covers["target"])

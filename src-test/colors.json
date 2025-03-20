@@ -1,26 +1,26 @@
 {
     "green": {
         "v_max": 255,
-        "v_min": 161,
+        "v_min": 171,
         "s_max": 255,
-        "s_min": 172,
+        "s_min": 206,
         "h_max": 55,
         "h_min": 37
     },
     "yellow": {
         "v_max": 255,
-        "v_min": 161,
+        "v_min": 175,
         "s_max": 255,
-        "s_min": 147,
+        "s_min": 176,
         "h_max": 35,
         "h_min": 17
     },
     "white": {
         "v_max": 255,
-        "v_min": 172,
-        "s_max": 152,
+        "v_min": 176,
+        "s_max": 148,
         "s_min": 0,
-        "h_max": 199,
+        "h_max": 79,
         "h_min": 0
     }
 }
