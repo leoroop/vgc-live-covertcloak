@@ -1,0 +1,2 @@
+from .moves_coordinates_model import MovesCoordinatesModel
+from .targets_coordinates_model import TargetsCoordinatesModel

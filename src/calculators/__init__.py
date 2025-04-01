@@ -1,0 +1,2 @@
+from .moves_coordinates_calculator import MovesCoordinatesCalculator
+from .targets_coordinates_calculator import TargetsCoordinatesCalculator
