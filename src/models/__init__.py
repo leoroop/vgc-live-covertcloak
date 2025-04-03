@@ -1,2 +1,3 @@
 from .moves_coordinates_model import MovesCoordinatesModel
 from .targets_coordinates_model import TargetsCoordinatesModel
+from .battlemenuoptions_coordinates_model import BattleMenuOptionsCoordinatesModel
