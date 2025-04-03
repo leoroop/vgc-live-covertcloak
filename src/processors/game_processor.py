@@ -1,92 +1,34 @@
 import cv2
 
 from src.calculators import MovesCoordinatesCalculator, TargetsCoordinatesCalculator
+from src.calculators.battlemenuoptions_coordinates_calculator import BattleMenuOptionsCoordinatesCalculator
 from src.models import MovesCoordinatesModel, TargetsCoordinatesModel
+from src.models.battlemenuoptions_coordinates_model import BattleMenuOptionsCoordinatesModel
+from src.processors.battlemenu_processor import BattleMenuOptionsProcessor
+from src.processors.moves_processor import MovesProcessor
+from src.processors.targets_processor import TargetsProcessor
 
 
 class GameProcessor:
-
+    frame_height: int
+    frame_width: int
     moves: MovesCoordinatesModel
     targets: TargetsCoordinatesModel
+    battlemenuoptions: BattleMenuOptionsCoordinatesModel
 
     def __init__(self, start_frame):
         self.frame_height = start_frame.shape[0]
-        self.frame_width = start_frame.shape[1]        
-
-        self.red_color = (0,0,255)
-        self.blue_color = (255, 0,0)
-        self.green_color = (0, 255,0)
-        self.line_style = cv2.LINE_4
-
-        self.moves = MovesCoordinatesCalculator.calculate_moves_positions(self.frame_width, self.frame_height)
-        self.targets = TargetsCoordinatesCalculator.calculate_targets_positions(self.frame_width, self.frame_height)
+        self.frame_width = start_frame.shape[1]
+        self.moves = MovesCoordinatesCalculator.calculate_moves_coordinates(self.frame_width, self.frame_height)
+        self.targets = TargetsCoordinatesCalculator.calculate_targets_coordinates(self.frame_width, self.frame_height)
+        self.battlemenuoptions = BattleMenuOptionsCoordinatesCalculator.calculate_battlemenuoptions_coordinates(self.frame_width, self.frame_height)
 
     def apply_moves_markers(self, frame):
-        cv2.rectangle(
-            frame,
-            (self.moves.moves_x, self.moves.move1_y),
-            (self.moves.moves_x + self.moves.moves_x_offset, self.moves.move1_y + self.moves.moves_y_offset),
-            self.red_color,
-            self.line_style
-        )
-        cv2.rectangle(
-            frame,
-            (self.moves.moves_x, self.moves.move2_y),
-            (self.moves.moves_x + self.moves.moves_x_offset, self.moves.move2_y + self.moves.moves_y_offset),
-            self.red_color,
-            self.line_style
-        )
-        cv2.rectangle(
-            frame,
-            (self.moves.moves_x, self.moves.move3_y),
-            (self.moves.moves_x + self.moves.moves_x_offset, self.moves.move3_y + self.moves.moves_y_offset),
-            self.red_color,
-            self.line_style
-        )
-        cv2.rectangle(
-            frame,
-            (self.moves.moves_x, self.moves.move4_y),
-            (self.moves.moves_x + self.moves.moves_x_offset,
-            self.moves.move4_y + self.moves.moves_y_offset),
-            self.red_color,
-            self.line_style
-        )
+        MovesProcessor.apply_moves_markers(frame, self.moves)
 
     def apply_targets_markers(self, frame):
-        # TOP LEFT
-        cv2.rectangle(
-            frame,
-            (self.targets.target_left, self.targets.target_top),
-            (self.targets.target_left + self.targets.target_x_offset, self.targets.target_top + self.targets.target_y_offset),
-            self.red_color,
-            self.line_style
-        )
+        TargetsProcessor.apply_targets_markers(frame, self.targets)
 
-        # TOP RIGHT
-        cv2.rectangle(
-            frame,
-            (self.targets.target_right, self.targets.target_top),
-            (self.targets.target_right + self.targets.target_x_offset, self.targets.target_top + self.targets.target_y_offset),
-            self.red_color,
-            self.line_style
-        )
-
-        # BOTTOM LEFT
-        cv2.rectangle(
-            frame,
-            (self.targets.target_left, self.targets.target_bottom),
-            (self.targets.target_left + self.targets.target_x_offset, self.targets.target_bottom + self.targets.target_y_offset),
-            self.red_color,
-            self.line_style
-        )
-
-        # BOTTOM RIGHT
-        cv2.rectangle(
-            frame,
-            (self.targets.target_right, self.targets.target_bottom),
-            (self.targets.target_right + self.targets.target_x_offset, self.targets.target_bottom + self.targets.target_y_offset),
-            self.red_color,
-            self.line_style
-        )
-
+    def apply_battlemenuoptions_markers(self, frame):
+        BattleMenuOptionsProcessor.apply_battlemenuoptions_markers(frame, self.battlemenuoptions)
 

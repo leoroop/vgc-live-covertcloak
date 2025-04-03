@@ -4,7 +4,7 @@ from src.models import MovesCoordinatesModel
 class MovesCoordinatesCalculator:
 
     @staticmethod
-    def calculate_moves_positions(frame_width: int, frame_height: int) -> MovesCoordinatesModel:
+    def calculate_moves_coordinates(frame_width: int, frame_height: int) -> MovesCoordinatesModel:
         moves_coordinates = MovesCoordinatesModel(
             moves_x=int(frame_width * 0.734375), # 940 / 1280
             move1_y=int(frame_height * 0.618056), # 445 / 720

@@ -3,7 +3,7 @@ from src.models import TargetsCoordinatesModel
 
 class TargetsCoordinatesCalculator:
     @staticmethod
-    def calculate_targets_positions(frame_width: int, frame_height: int) -> TargetsCoordinatesModel:
+    def calculate_targets_coordinates(frame_width: int, frame_height: int) -> TargetsCoordinatesModel:
         targets = TargetsCoordinatesModel(
             target_left = int(frame_width * 0.339843), # 435 / 1280
             target_right = int(frame_width * 0.507812), # 650 / 1280
