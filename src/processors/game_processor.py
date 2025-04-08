@@ -1,11 +1,14 @@
-from src.calculators import MovesCoordinatesCalculator, TargetsCoordinatesCalculator, ChangesCoordinatesCalculator
+from src.calculators import MovesCoordinatesCalculator, TargetsCoordinatesCalculator, ChangesCoordinatesCalculator, \
+    TeamPreviewCoordinatesCalculator
 from src.calculators.battlemenuoptions_coordinates_calculator import BattleMenuOptionsCoordinatesCalculator
-from src.models import MovesCoordinatesModel, TargetsCoordinatesModel, ChangesCoordinatesModel
+from src.models import MovesCoordinatesModel, TargetsCoordinatesModel, ChangesCoordinatesModel, \
+    TeamPreviewCoordinatesModel
 from src.models.battlemenuoptions_coordinates_model import BattleMenuOptionsCoordinatesModel
 from src.processors.battlemenu_processor import BattleMenuOptionsProcessor
 from src.processors.changes_processor import ChangesProcessor
 from src.processors.moves_processor import MovesProcessor
 from src.processors.targets_processor import TargetsProcessor
+from src.processors.teampreview_processor import TeamPreviewProcessor
 
 
 class GameProcessor:
@@ -15,6 +18,7 @@ class GameProcessor:
     targets: TargetsCoordinatesModel
     battlemenuoptions: BattleMenuOptionsCoordinatesModel
     changes: ChangesCoordinatesModel
+    teampreview: TeamPreviewCoordinatesModel
 
     def __init__(self, start_frame):
         self.frame_height = start_frame.shape[0]
@@ -23,6 +27,7 @@ class GameProcessor:
         self.targets = TargetsCoordinatesCalculator.calculate_targets_coordinates(self.frame_width, self.frame_height)
         self.battlemenuoptions = BattleMenuOptionsCoordinatesCalculator.calculate_battlemenuoptions_coordinates(self.frame_width, self.frame_height)
         self.changes = ChangesCoordinatesCalculator.calculate_changes_coordinates(self.frame_width, self.frame_height)
+        self.teampreview = TeamPreviewCoordinatesCalculator.calculate_teampreview_coordinates(self.frame_width, self.frame_height)
 
     def apply_moves_markers(self, frame):
         MovesProcessor.apply_moves_markers(frame, self.moves)
@@ -35,3 +40,6 @@ class GameProcessor:
 
     def apply_changes_markers(self, frame):
         ChangesProcessor.apply_changes_markers(frame, self.changes)
+
+    def apply_teampreview_markers(self, frame):
+        TeamPreviewProcessor.apply_teampreview_markers(frame, self.teampreview)

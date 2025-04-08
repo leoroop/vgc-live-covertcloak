@@ -2,3 +2,4 @@ from .moves_coordinates_calculator import MovesCoordinatesCalculator
 from .targets_coordinates_calculator import TargetsCoordinatesCalculator
 from .battlemenuoptions_coordinates_calculator import BattleMenuOptionsCoordinatesCalculator
 from .change_coordinates_calculator import ChangesCoordinatesCalculator
+from .teampreview_coordinates_calculator import TeamPreviewCoordinatesCalculator

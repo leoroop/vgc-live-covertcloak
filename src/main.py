@@ -30,10 +30,10 @@ def main():
         
         # frame = cv2.imread("screens/moves.png")
         # frame = cv2.imread("screens/target.png")
-        
-        frame = cv2.imread("screens/battle_menu.png")
-        # frame = cv2.imread("../screens/change.png")
-        # frame = cv2.imread("../screens/teampreview.png")
+        # frame = cv2.imread("screens/battle_menu.png")
+        # frame = cv2.imread("screens/change.png")
+
+        frame = cv2.imread("screens/teampreview.png")
         # success, frame = capture.read()
 
         clean = frame.copy()
@@ -41,7 +41,9 @@ def main():
 
         # gp.apply_moves_markers(frame)
         # gp.apply_targets_markers(frame)
-        gp.apply_battlemenuoptions_markers(frame)
+        # gp.apply_battlemenuoptions_markers(frame)
+        # gp.apply_changes_markers(frame)
+        gp.apply_teampreview_markers(frame)
 
         # show_markers(clean)
 
