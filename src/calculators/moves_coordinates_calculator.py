@@ -11,7 +11,13 @@ class MovesCoordinatesCalculator:
             move2_y=int(frame_height * 0.722222), # 520 / 720
             move3_y=int(frame_height * 0.826389), # 595 / 720
             move4_y=int(frame_height * 0.930556), # 670 / 720
-            moves_x_offset = int(frame_width / 64),
+            moves_x_offset = int(frame_width / 32),
             moves_y_offset = int(frame_height / 36) #TODO: trova un nome per queste costanti
         )
         return moves_coordinates
+
+    @staticmethod
+    def get_marker_area(moves_coordinates: MovesCoordinatesModel) -> int:
+        base = moves_coordinates.moves_x_offset
+        height = moves_coordinates.moves_y_offset
+        return base * height

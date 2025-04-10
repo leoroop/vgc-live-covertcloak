@@ -1,12 +1,14 @@
 from src.calculators import MovesCoordinatesCalculator, TargetsCoordinatesCalculator, ChangesCoordinatesCalculator, \
     TeamPreviewCoordinatesCalculator
 from src.calculators.battlemenuoptions_coordinates_calculator import BattleMenuOptionsCoordinatesCalculator
+from src.calculators.pkmninfo_coordinates_calculator import PkmnInfoCoordinatesCalculator
 from src.models import MovesCoordinatesModel, TargetsCoordinatesModel, ChangesCoordinatesModel, \
-    TeamPreviewCoordinatesModel
+    TeamPreviewCoordinatesModel, PkmnInfoCoordinatesModel
 from src.models.battlemenuoptions_coordinates_model import BattleMenuOptionsCoordinatesModel
 from src.processors.battlemenu_processor import BattleMenuOptionsProcessor
 from src.processors.changes_processor import ChangesProcessor
 from src.processors.moves_processor import MovesProcessor
+from src.processors.pkmninfo_processor import PkmnInfoProcessor
 from src.processors.targets_processor import TargetsProcessor
 from src.processors.teampreview_processor import TeamPreviewProcessor
 
@@ -19,6 +21,7 @@ class GameProcessor:
     battlemenuoptions: BattleMenuOptionsCoordinatesModel
     changes: ChangesCoordinatesModel
     teampreview: TeamPreviewCoordinatesModel
+    pkmninfo: PkmnInfoCoordinatesModel
 
     def __init__(self, start_frame):
         self.frame_height = start_frame.shape[0]
@@ -28,6 +31,7 @@ class GameProcessor:
         self.battlemenuoptions = BattleMenuOptionsCoordinatesCalculator.calculate_battlemenuoptions_coordinates(self.frame_width, self.frame_height)
         self.changes = ChangesCoordinatesCalculator.calculate_changes_coordinates(self.frame_width, self.frame_height)
         self.teampreview = TeamPreviewCoordinatesCalculator.calculate_teampreview_coordinates(self.frame_width, self.frame_height)
+        self.pkmninfo = PkmnInfoCoordinatesCalculator.calculate_pkmninfo_coordinates(self.frame_width, self.frame_height)
 
     def apply_moves_markers(self, frame):
         MovesProcessor.apply_moves_markers(frame, self.moves)
@@ -43,3 +47,9 @@ class GameProcessor:
 
     def apply_teampreview_markers(self, frame):
         TeamPreviewProcessor.apply_teampreview_markers(frame, self.teampreview)
+
+    def apply_pkmninfo_markers(self, frame):
+        PkmnInfoProcessor.apply_pkmninfo_markers(frame, self.pkmninfo)
+
+    def move_selection_screen_is_active(self, frame) -> bool:
+        return MovesProcessor.check_if_move_selection(frame, self.moves)
