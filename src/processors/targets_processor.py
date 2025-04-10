@@ -1,6 +1,6 @@
 import cv2
 
-from src.contants.colors import red_color, line_style
+from src.contants.colors_constants import red_color, line_style
 from src.models import TargetsCoordinatesModel
 
 

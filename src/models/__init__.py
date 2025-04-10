@@ -3,3 +3,4 @@ from .targets_coordinates_model import TargetsCoordinatesModel
 from .battlemenuoptions_coordinates_model import BattleMenuOptionsCoordinatesModel
 from .changes_coordinates_model import ChangesCoordinatesModel
 from .teampreview_coordinates_model import TeamPreviewCoordinatesModel
+from .pkmninfo_coordinates_model import PkmnInfoCoordinatesModel
