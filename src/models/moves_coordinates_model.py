@@ -9,3 +9,8 @@ class MovesCoordinatesModel(BaseModel):
     move4_y: int
     moves_x_offset: int
     moves_y_offset: int
+
+    teracristal_x: int
+    teracristal_y: int
+    teracristal_x_offset: int
+    teracristal_y_offset: int

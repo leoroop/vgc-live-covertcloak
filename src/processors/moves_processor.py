@@ -37,6 +37,14 @@ class MovesProcessor:
             red_color,
             line_style
         )
+        cv2.rectangle(
+            frame,
+            (moves.teracristal_x, moves.teracristal_y),
+            (moves.teracristal_x + moves.teracristal_x_offset,
+             moves.teracristal_y + moves.teracristal_y_offset),
+            red_color,
+            line_style
+        )
 
     @staticmethod
     def check_if_move_selection(masked_frame, moves_coordinates: MovesCoordinatesModel) -> bool:
@@ -58,14 +66,21 @@ class MovesProcessor:
             moves_coordinates.moves_x: moves_coordinates.moves_x + moves_coordinates.moves_x_offset,
         ]
 
+        teracristal = masked_frame[
+            moves_coordinates.teracristal_y: moves_coordinates.teracristal_y + moves_coordinates.teracristal_y_offset,
+            moves_coordinates.teracristal_x: moves_coordinates.teracristal_x + moves_coordinates.teracristal_x_offset,
+        ]
+
         move1_pixels = cv2.countNonZero(move_1)
         move2_pixels = cv2.countNonZero(move_2)
         move3_pixels = cv2.countNonZero(move_3)
         move4_pixels = cv2.countNonZero(move_4)
+        teracristal_pixels = cv2.countNonZero(teracristal)
 
         return (
-            move1_pixels >= (marker_area * 0.9) or
-            move2_pixels >= (marker_area * 0.9) or
-            move3_pixels >= (marker_area * 0.9) or
-            move4_pixels >= (marker_area * 0.9)
+                move1_pixels >= (marker_area * 0.85) or
+                move2_pixels >= (marker_area * 0.85) or
+                move3_pixels >= (marker_area * 0.85) or
+                move4_pixels >= (marker_area * 0.85) or
+                225 <= teracristal_pixels <= 300
         )

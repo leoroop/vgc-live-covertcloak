@@ -12,7 +12,11 @@ class MovesCoordinatesCalculator:
             move3_y=int(frame_height * 0.826389), # 595 / 720
             move4_y=int(frame_height * 0.930556), # 670 / 720
             moves_x_offset = int(frame_width / 32),
-            moves_y_offset = int(frame_height / 36) #TODO: trova un nome per queste costanti
+            moves_y_offset = int(frame_height / 36), #TODO: trova un nome per queste costanti
+            teracristal_x = int(frame_width * 0.613281), # 785 / 1280
+            teracristal_y = int(frame_height * 0.631944), # 455 / 720
+            teracristal_x_offset = int(frame_width / 22),
+            teracristal_y_offset = int(frame_height / 30)
         )
         return moves_coordinates
 
