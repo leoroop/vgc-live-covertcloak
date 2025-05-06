@@ -1,14 +1,25 @@
 import json
 
+import cv2
 import numpy as np
 
+from calibrators.calibrator import Calibrator
 from src.processors.game_processor import GameProcessor
 
-from utils import *
+from utils import Utils
 
 def main():
+    # device = Utils.choose_capturecard()
+    device = 0
+    capture = cv2.VideoCapture(device, cv2.CAP_DSHOW)
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT , 1080)
 
-    with open('resources/colors.json', 'r', encoding='utf-8') as file:
+    calibrator = Calibrator(capture, 2560, 1440)
+    calibrator.perform_calibration()
+
+
+    with open('resources/old_colors.json', 'r', encoding='utf-8') as file:
         colors = json.load(file)
 
     yellow_min = np.array([colors['yellow']['h_min'], colors['yellow']['s_min'], colors['yellow']['v_min']])
@@ -20,11 +31,6 @@ def main():
     blue_min = np.array([colors['blue']['h_min'], colors['blue']['s_min'], colors['blue']['v_min']])
     blue_max = np.array([colors['blue']['h_max'], colors['blue']['s_max'], colors['blue']['v_max']])
 
-    # device = choose_capturecard()
-    device = 0
-    capture = cv2.VideoCapture(device)
-    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-    capture.set(cv2.CAP_PROP_FRAME_HEIGHT , 1080)
 
 
     # frame = cv2.imread("screens/target.png")
