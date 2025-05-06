@@ -1,8 +1,8 @@
 import cv2
 
-from src.calculators import MovesCoordinatesCalculator
 from src.contants.colors_constants import red_color, line_style
 from src.models import MovesCoordinatesModel
+from src.utils import Utils
 
 
 class MovesProcessor:
@@ -48,7 +48,7 @@ class MovesProcessor:
 
     @staticmethod
     def check_if_move_selection(masked_frame, moves_coordinates: MovesCoordinatesModel) -> bool:
-        marker_area = MovesCoordinatesCalculator.get_marker_area(moves_coordinates)
+        marker_area = Utils.get_marker_area(moves_coordinates.moves_x_offset, moves_coordinates.moves_y_offset)
         move_1 = masked_frame[
             moves_coordinates.move1_y: moves_coordinates.move1_y + moves_coordinates.moves_y_offset,
             moves_coordinates.moves_x: moves_coordinates.moves_x + moves_coordinates.moves_x_offset,

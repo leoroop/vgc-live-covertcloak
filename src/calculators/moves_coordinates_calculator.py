@@ -1,4 +1,6 @@
-from src.models import MovesCoordinatesModel
+import cv2
+
+from src.models import MovesCoordinatesModel, MaskModel
 
 
 class MovesCoordinatesCalculator:
@@ -21,7 +23,16 @@ class MovesCoordinatesCalculator:
         return moves_coordinates
 
     @staticmethod
-    def get_marker_area(moves_coordinates: MovesCoordinatesModel) -> int:
-        base = moves_coordinates.moves_x_offset
-        height = moves_coordinates.moves_y_offset
-        return base * height
+    def calculate_moves_mask(frame_width: int, frame_height: int) -> MaskModel:
+        cover = cv2.imread("covers/cover_moves.jpg")
+        x_start = int(frame_width / 1.741497) # 1280 / 735
+        x_end = x_start + cover.shape[1]
+        y_start = int(frame_height / 2.400000) # 720 / 300
+        y_end = y_start + cover.shape[0]
+        return MaskModel(
+            x_start=x_start,
+            x_end=x_end,
+            y_start=y_start,
+            y_end=y_end,
+            cover=cover
+        )

@@ -4,3 +4,4 @@ from .battlemenuoptions_coordinates_model import BattleMenuOptionsCoordinatesMod
 from .changes_coordinates_model import ChangesCoordinatesModel
 from .teampreview_coordinates_model import TeamPreviewCoordinatesModel
 from .pkmninfo_coordinates_model import PkmnInfoCoordinatesModel
+from .mask_model import MaskModel
